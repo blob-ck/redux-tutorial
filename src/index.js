@@ -3,40 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {createStore} from "redux";
+import {Store as store} from "redux";
+import Provider from "react-redux";
+//1. 맨 왼쪽 path의 이름으로 js파일을 찾는다.
+//2. 1.이 없다면 일치하는 폴더 내의 index.js를 찾는다.
 
-//@Params: state, action
-const reducer = (state, action) => {
-  if(action.type === 'changeState') {
-    return action.payload;
-  }
-  return 'State'; // 초기상태
-}
-
-//Decorator 패턴?
-const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
-console.log(store);
-console.log("createStore: ", store.getState());
-
-//subscribe
-store.subscribe(()=> console.log('subscribe: ', store.getState()));
-
-//action dispatch test
-const action = {
-  type: "changeState", // 약속된 변수명 type
-  payload: "new State"
-}
-
-//==publish
-store.dispatch(action);
+// store.dispatch(action);
 
 console.log("After dispatch: ", store.getState());
 
-//action, state 를 파라미터로 받아 reducer가 state 를 update하고, 변경이 일어났다면 state를 subscriber에게 push한다.
-//reducer(state, action) => if(state != prevState) push(state, toSubscriber)
-
-
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
