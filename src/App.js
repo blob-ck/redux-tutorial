@@ -1,17 +1,25 @@
 import React from 'react';
 import './App.css';
-import {connect} from "react-redux";
+import {connect, useSelector, useDispatch} from "react-redux";
 import {updateUser} from "./redux/actions";
 
 function App(props) {
   console.log(props);
+
+  const products = useSelector(state => state.product);
+  const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
   return (
     <div className="App">
-      <button onClick={() => props.updateUser('LDK')}>액션 디스패치 테스트</button>
+      <p>{user}</p>
+      <p>{products}</p>
+      <button onClick={() => dispatch(updateUser('LDK'))}>액션 디스패치 테스트</button>
     </div>
   );
 }
 
+export default App;
+/*
 const mapStateToProps = (state) => ({
   //왼쪽이 props, 오른쪽이 store의 state
   products: state.products,
@@ -28,3 +36,4 @@ const mapActionToProps = (dispatch) => ({
 //HoC : 입력파라미터에 컴포넌트를 넣어서 새로운 기능의 컴포넌트를 리턴하는 함수
 
 export default connect(mapStateToProps, mapActionToProps)(App);
+*/
